@@ -1,7 +1,7 @@
 {
   "name": "scratch-audio",
   "version": "0.1.0",
-  "description": "audio engine for scratch 3.0",
+  "description": "audio engine for Bilup",
   "main": "dist.js",
   "browser": "./src/index.js",
   "scripts": {
@@ -14,13 +14,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TurboWarp/scratch-audio.git"
+    "url": "git+https://github.com/Bilup/scratch-audio.git"
   },
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/TurboWarp/scratch-audio/issues"
+    "url": "https://github.com/Bilup/scratch-audio/issues"
   },
-  "homepage": "https://github.com/TurboWarp/scratch-audio#readme",
+  "homepage": "https://github.com/Bilup/scratch-audio#readme",
   "tap": {
     "branches": 0,
     "functions": 0,

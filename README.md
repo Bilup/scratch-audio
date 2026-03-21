@@ -1,4 +1,4 @@
-# TurboWarp/scratch-audio
+# Bilup/scratch-audio
 
 A slightly modified drop-in replacement for scratch-audio.
 
