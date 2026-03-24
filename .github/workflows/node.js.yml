@@ -28,7 +28,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dist
-          path: dist
+          path: dist.js*
 
   deploy:
     runs-on: ubuntu-latest
@@ -49,16 +49,16 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: dist
-        path: dist
+        path: .
 
     - name: Deploy to develop-builds
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-        # Backup dist
-        rm -rf /tmp/dist
-        cp -r dist /tmp/dist
+        # Backup dist files
+        rm -rf /tmp/dist.js*
+        cp dist.js* /tmp/
 
         # Fetch all branches
         git fetch origin
@@ -74,13 +74,12 @@ jobs:
         # Sync code with develop
         git merge origin/develop --no-edit
 
-        # Replace ONLY dist
-        rm -rf dist
-        mkdir dist
-        cp -r /tmp/dist/* dist/
+        # Replace ONLY dist files
+        rm -f dist.js*
+        cp /tmp/dist.js* .
 
-        # Force add dist (ignore .gitignore)
-        git add -f dist
+        # Force add dist files (ignore .gitignore)
+        git add -f dist.js*
 
         # Commit if changed
         git commit -m "chore: update dist from develop" || echo "No changes"
