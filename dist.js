@@ -1418,6 +1418,37 @@ var AudioEngine = function () {
         }
 
         /**
+         * Decode a sound into an AudioBuffer without creating a player.
+         * Callers can cache the returned immutable buffer and create a separate
+         * player for each sprite or sound bank.
+         * @param {object} sound - an object containing audio data
+         * @returns {Promise<AudioBuffer>} decoded audio data
+         */
+
+    }, {
+        key: 'decodeSoundBuffer',
+        value: function decodeSoundBuffer(sound) {
+            return this._decodeSound(sound).then(function (_ref3) {
+                var _ref4 = _slicedToArray(_ref3, 2),
+                    buffer = _ref4[1];
+
+                return buffer;
+            });
+        }
+
+        /**
+         * Create a new player around an existing decoded AudioBuffer.
+         * @param {AudioBuffer} buffer - decoded audio data
+         * @returns {SoundPlayer} a player with its own playback state and ID
+         */
+
+    }, {
+        key: 'createSoundPlayer',
+        value: function createSoundPlayer(buffer) {
+            return new SoundPlayer(this, { id: uid(), buffer: buffer });
+        }
+
+        /**
          * Decode a sound, decompressing it into audio samples.
          *
          * Create a SoundPlayer instance that can be used to play the sound and
@@ -1434,12 +1465,8 @@ var AudioEngine = function () {
         value: function decodeSoundPlayer(sound) {
             var _this3 = this;
 
-            return this._decodeSound(sound).then(function (_ref3) {
-                var _ref4 = _slicedToArray(_ref3, 2),
-                    id = _ref4[0],
-                    buffer = _ref4[1];
-
-                return new SoundPlayer(_this3, { id: id, buffer: buffer });
+            return this.decodeSoundBuffer(sound).then(function (buffer) {
+                return _this3.createSoundPlayer(buffer);
             });
         }
 
